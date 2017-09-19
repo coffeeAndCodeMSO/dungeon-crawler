@@ -1,0 +1,2 @@
+export const CHECK_ALIVE="CHECK_ALIVE";
+export const SWITCH_ALIVE="SWITCH_ALIVE";
