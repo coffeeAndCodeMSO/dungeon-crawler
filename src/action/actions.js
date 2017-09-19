@@ -9,7 +9,7 @@ export function checkAlive(){
 
 export function switchAlive(){
   return {
-    type:types.CHECK_ALIVE,
+    type:types.SWITCH_ALIVE,
     alive:false
   }
 }

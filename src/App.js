@@ -1,21 +1,49 @@
-import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as actionTypes from './action/actions';
+import PropTypes from 'prop-types';
+import React from 'react';
 import World from './components/World';
 
-
-class App extends Component {
-  constructor(props){
-    super(props);
-    this.state={
-      something:false
-    }
+class App extends React.Component {
+  componentWillMount() {
+    this.props.actionTypes.checkAlive();
   }
+
+  renderAlive() {
+    return <div>{ this.props.alive === true ? "alive" : "dead" } </div>
+  }
+
+  destroyHero(){
+    this.props.actionTypes.switchAlive();
+  }
+
   render() {
     return (
-      <div>
+      <div onClick={() => this.destroyHero() }>
         <World />
+        { this.renderAlive() }
       </div>
     );
   }
 }
 
-export default App;
+App.propTypes = {
+  actionTypes : PropTypes.Object,
+};
+
+function mapStateToProps(state) {
+  return {
+    alive: state.alive
+  };
+}
+function mapDispatchToProps(dispatch) {
+  return {
+    actionTypes: bindActionCreators(actionTypes, dispatch)
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
